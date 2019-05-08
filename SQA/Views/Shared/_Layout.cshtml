@@ -1,0 +1,117 @@
+﻿@inject SignInManager<User> SignInManager
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery-editable-select-master/dist/jquery-editable-select.min.js"></script>
+
+    <link asp-href-include="/lib/jquery-editable-select-master/dist/jquery-editable-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" asp-href-include="/lib/w3css/*.css" />
+    <link asp-href-include="/lib/M3Y/M3Y.css" rel="stylesheet" />
+    <link asp-href-include="/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <link asp-href-include="/lib/fontawesome/css/font-awesome.css" rel="stylesheet" />
+    <script type="text/javascript" asp-src-include="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>SQA</title>
+</head>
+<body>
+
+    <!-- Wide header -->
+
+    <div class="w3-bar w3-light-gray w3-card">
+        <a asp-area="" asp-controller="Student" asp-action="Index"
+           class="w3-bar-item w3-large btn w3-button">
+            Home
+        </a>
+        <div class="d-none d-sm-none d-md-none d-lg-block d-xl-block">
+            @if (!SignInManager.IsSignedIn(User))
+            {
+                <a asp-area="" asp-controller="Student" asp-action="Login"
+                   class="w3-bar-item btn w3-large w3-button">Login</a>
+                <a asp-area="" asp-controller="Student" asp-action="Registration"
+                   class="w3-bar-item btn w3-large w3-button">Registration</a>
+            }
+            else
+            {
+                <a asp-area="" asp-controller="Student" asp-action="Logout"
+                   class="w3-bar-item btn w3-button active w3-large w3-right">Log out</a>
+                <a asp-area="" asp-controller="Student" asp-action="Index"
+                   class="w3-bar-item btn w3-button active w3-large w3-right">
+                    Wellcome @User.Identity.Name
+                </a>
+                <a asp-area="" asp-controller="Messanger" asp-action="Index"
+                   class="w3-bar-item btn w3-button active w3-large w3-right">
+                    <i class="fa fa-bell-o"></i>
+                </a>
+            }
+        </div>
+        <button href="javascript:void(0)"
+                class="w3-bar-item w3-button w3-xlarge w3-hide-large w3-right"
+                onclick="smallHeaderShow()">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- Small header -->
+
+    <div id="smallHeader" class="w3-bar-block  w3-light-gray w3-hide w3-hide-large">
+        @if (!SignInManager.IsSignedIn(User))
+        {
+            <a asp-area="" asp-controller="Student" asp-action="Login"
+               class="w3-bar-item btn w3-large w3-button">Login</a>
+            <a asp-area="" asp-controller="Student" asp-action="Registration"
+               class="w3-bar-item btn w3-large w3-button">Registration</a>
+        }
+        else
+        {
+            <a asp-area="" asp-controller="Messanger" asp-action="Index"
+               class="w3-bar-item btn w3-button active w3-large">
+                <i class="fa fa-bell-o"></i>
+            </a>
+            <a asp-area="" asp-controller="Student" asp-action="Index"
+               class="w3-bar-item btn w3-button active w3-large">
+                Wellcome @User.Identity.Name
+            </a>
+            <a asp-area="" asp-controller="Student" asp-action="Logout"
+               class="w3-bar-item btn w3-button active w3-large">Log out</a>
+        }
+    </div>
+
+    <!-- Body -->
+
+    <div class="w3-container">
+        @RenderBody()
+    </div>
+
+    <div class="clearfix"></div>
+
+    <!-- Footer -->
+
+    <div class="w3-bar w3-light-gray w3-card">
+        <div class="w3-container">
+            <h5 class="h5">©Copy right for M3Y @DateTime.Now.Year</h5>
+        </div>
+    </div>
+
+
+    <!-- js for header -->
+
+    <script>
+        function smallHeaderShow() {
+            var x = document.getElementById("smallHeader");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+    </script>
+
+</body>
+</html>

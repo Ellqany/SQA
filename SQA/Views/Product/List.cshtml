@@ -1,0 +1,47 @@
+﻿@model ProductsListViewModel
+
+@{
+    Layout = "_ProductLayout";
+}
+
+<div class="w3-animate-zoom">
+    <header class="w3-container form-inline w3-text-gray">
+        Sort products by:
+        <select id="sort" asp-for="Order"
+                class="form-control-sm" onchange="Change()">
+            <option value="1">Name</option>
+            <option value="2">Price</option>
+            <option value="3">Category</option>
+        </select>
+    </header>
+    <br />
+</div>
+
+<div id="content" class="w3-animate-zoom">
+    @foreach (var p in Model.Products)
+    {
+        <partial name="ProductSummary" model="p" />
+    }
+
+    <div page-model="@Model.PagingInfo" page-action="List"
+         page-classes-enabled="true"
+         page-class="btn"
+         page-class-normal="btn-outline-secondary"
+         page-class-selected="btn-primary"
+         page-url-category="@Model.CurrentCategory"
+         class="btn-group pull-left m-1">
+    </div>
+</div>
+
+<script>
+    function Change() {
+        var order = $("#sort :selected").val();
+        fetch('/Product/GetProducts?Category=@Model.CurrentCategory&Page=@Model.PagingInfo.CurrentPage&order=' + order)
+            .then((response) => {
+                return response.text();
+            })
+            .then((result) => {
+                document.getElementById('content').innerHTML = result;
+            });
+    }
+</script>

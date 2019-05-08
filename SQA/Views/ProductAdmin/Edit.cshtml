@@ -1,0 +1,63 @@
+﻿@model CreateProduct
+
+@{
+    ViewBag.Title = "Edit Product";
+    Layout = "_AdminLayout";
+}
+
+<form asp-action="Edit" method="post" class="container active" enctype="multipart/form-data">
+    <input type="hidden" asp-for="Product.ProductID" />
+
+    <p class="alert-danger">@TempData["message"]</p>
+
+    <div class="form-group">
+        <label asp-for="Product.Name"></label>
+        <input asp-for="Product.Name" class="form-control" />
+        <span asp-validation-for="Product.Name" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Description"></label>
+        <textarea asp-for="Product.Description" class="form-control"></textarea>
+        <span asp-validation-for="Product.Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Category"></label>
+        <input asp-for="Product.Category" class="form-control" />
+        <span asp-validation-for="Product.Category" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Product.Price"></label>
+        <input asp-for="Product.Price" class="form-control" />
+        <span asp-validation-for="Product.Price" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <div style="position:relative;">
+            <label asp-for="Image"></label>
+            <a class='btn' href='javascript:;'>
+                Choose File...
+                <input asp-for="Image" type="file" id="Image" name="Image"
+                       tyle="width:100%" accept="image/*" class="M3yUpload">
+            </a>
+        </div>
+        <img src="@Url.Action("GetImage", "Product",new { Model.Product.ProductID })"
+             id="demo" class="img-thumbnail" style="height:130px;width:130px;" />
+        <p class="text-danger" id="imgwide"></p>
+    </div>
+
+    <div class="text-center">
+        <button class="btn btn-outline-primary" type="submit">Save</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Cancel</a>
+    </div>
+
+</form>
+
+<script src="~/lib/jquery/Model.js"></script>
+<script>
+    $("#Image").change(function () {
+        readIMG(this, '#demo', 'imgwide');
+    });
+</script>

@@ -1,0 +1,74 @@
+﻿@model CreateMessage
+
+@{
+    Layout = null;
+}
+
+<div class="w3-animate-zoom">
+
+    <h3 id="user" class="text-center">@Model.UserName</h3>
+
+    <div id="updates" class="w3-panel w3-container" style="height:450px;overflow:auto">
+        <partial name="Messages" model="Model.Messages" />
+    </div>
+
+    <br />
+
+    <div class="w3-bottom">
+        <form name="MyForm" asp-controller="Messanger" asp-action="Add"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#updates"
+              data-ajax-success="sendMessage">
+            <input type="hidden" asp-for="UserName" />
+            <input id="sender" type="hidden" asp-for="Sender" />
+
+            <div class="M3ysearch-container">
+                <input type="text" id="txtMessage" asp-for="txtMessage" class="M3ySearch float-left" autocomplete="on" autofocus />
+                <button type="submit" class="M3ySearchButton btn-outline-secondary float-left">
+                    <i class="fa fa-send-o"></i>
+                </button>
+            </div>
+
+        </form>
+
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+
+    </div>
+
+</div>
+
+<script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+
+<script>
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chat")
+        .build();
+
+    connection.start().catch(err => console.error(err.toString()));
+
+    connection.on('Send', (nick, message) => {
+        let sender = $('#sender').val();
+        DisplayMessagesDiv = document.getElementById("updates");
+        if (nick === sender) {
+            DisplayMessagesDiv.innerHTML += '<p class="w3-text-purple">' + message + "</p>";
+        }
+    });
+
+    function sendMessage() {
+        let message = $('#txtMessage').val();
+        let nick = $('#user').text();
+
+        $('#txtMessage').val('');
+
+        connection.invoke('Send', nick, message);
+        event.preventDefault();
+    };
+
+</script>

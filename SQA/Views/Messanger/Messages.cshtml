@@ -1,0 +1,29 @@
+﻿@model List<Message>
+
+@{Layout = null; }
+
+@foreach (var item in Model)
+{
+    if (User.Identity.Name == item.Object)
+    {
+        <div class="form-group">
+            <div class="w3-container">
+                <p class="w3-text-indigo float-left w3-threequarter M3yText"
+                   style="display:inline;">@item.Content</p>
+                <p class="float-right w3-quarter M3yText" style="display:inline;">@item.Object</p>
+            </div>
+            <small class="w3-text-gray small">@item.Date</small>
+        </div>
+    }
+    else
+    {
+        <div class="form-group">
+            <div class="w3-container">
+                <p class="w3-text-purple float-left w3-threequarter M3yText"
+                   style="display:inline">@item.Content</p>
+                <p class="float-right w3-quarter M3yText" style="display:inline">@item.Object</p>
+            </div>
+            <small class="w3-text-gray small">@item.Date</small>
+        </div>
+    }
+}

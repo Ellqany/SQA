@@ -1,0 +1,82 @@
+﻿@model UsersPaging
+@{
+    Layout = null;
+}
+<table id="usertable" class="table table-hover table-responsive-sm table-responsive-xl" align="center">
+    <thead class="bg-primary w3-text-white text-center">
+        <tr>
+            <th> No </th>
+            <th> Name </th>
+            <th> Email </th>
+            <th> Gender </th>
+            <th> Phone </th>
+            <th> Faculty </th>
+            <th> Department </th>
+            <th> Delete </th>
+        </tr>
+    </thead>
+    <tbody class="w3-white text-center">
+        @{int i = 1;}
+        @foreach (var item in Model.UserandRoles)
+        {
+            <tr>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @i
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.User.Name
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.User.Email
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.User.Gender
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.User.PhoneNumber
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.Faculty
+                </td>
+                <td onclick="document.location = '@Url.Action("Edit", "Admin",
+                        new { @uname = item.User.UserName, @Search = Model.Search})';">
+                    @item.Department
+                </td>
+                <td>
+                    <form asp-controller="Admin" asp-action="Delete"
+                          asp-route-uname="@item.User.UserName"
+                          asp-route-Search="@Model.Search"
+                          data-ajax="true"
+                          data-ajax-method="POST"
+                          data-ajax-mode="replace"
+                          data-ajax-update="#acontent"
+                          data-ajax-loading="#divloading"
+                          data-ajax-confirm="Are you shure you want to Delete the user?">
+                        <button type="submit" class="btn btn-outline-danger"
+                                asp-route-uname="@item.User.UserName"
+                                asp-route-Search="@Model.Search">
+                            <i class="fa fa-remove"></i>
+                        </button>
+
+                    </form>
+                </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
+
+<div page-model="@Model.PagingInfo" page-action="Index"
+     page-classes-enabled="true"
+     page-class="btn"
+     page-class-normal="btn-danger"
+     page-search="@Model.Search"
+     page-class-selected="btn-primary"
+     class="btn-group float-left m-1 ">
+</div>

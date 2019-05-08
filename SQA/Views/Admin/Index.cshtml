@@ -1,0 +1,81 @@
+﻿@model UsersPaging
+
+<div class="active">
+    <div class="w3-animate-zoom">
+        <header class="w3-container">
+            <div class="w3-left w3-third">
+                <h6 class="h6">
+                    <a asp-controller="Admin" asp-action="Create"
+                       class="btn btn-outline-primary">Create user</a>
+                </h6>
+                <div class="form-inline w3-text-gray">
+                    <p class="w3-left">
+                        Page Size:
+                        <select id="Size" asp-for="PagingInfo.ItemsPerPage"
+                                class="form-control-sm" onchange="Change()">
+                            <option value="10">10</option>
+                            <option value="20">20</option>
+                            <option value="30">30</option>
+                            <option value="40">40</option>
+                            <option value="50">50</option>
+                        </select>
+                    </p>
+                </div>
+            </div>
+            <form asp-area="" asp-controller="Admin" asp-action="Index" method="get">
+                <div class="w3-twothird M3ysearch-container">
+                    <button type="submit" class="M3ySearchButton btn-outline-secondary"><i class="fa fa-search"></i></button>
+                    <input id="Search" asp-for="Search" type="search"
+                           placeholder="Search for Student" class="M3ySearch" style="font-size: 17px;width:60%;" />
+                </div>
+            </form>
+        </header>
+        <br />
+    </div>
+
+    <div class="active w3-animate-zoom" id="acontent">
+        <partial name="ListUsers" model="Model" />
+    </div>
+
+    <br />
+    <br />
+</div>
+
+<div class="active" id="divloading">
+    <partial name="Load" />
+</div>
+
+<script>
+    function Change() {
+        var Size = $("#Size :selected").val();
+        fetch('/Admin/List?Search=@Model.Search&Page=@Model.PagingInfo.CurrentPage&PageSize=' + Size)
+            .then((response) => {
+                return response.text();
+            })
+            .then((result) => {
+                document.getElementById('acontent').innerHTML = result;
+            });
+    }
+
+    $(function () {
+        $('#Search').autocomplete({
+            source: function (request, response) {
+            $.ajax({
+            url: '@Url.Action("SearchResult", "Admin")',
+            data: { search: $("#Search").val() },
+            dataType: "json",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+            response($.map(data, function (item) {
+                return { label: item, value: item };
+            }));
+                },
+                error: function (xhr, status, error) {
+                    alert("Error");
+                }
+            });
+            }
+        });
+    });
+</script>

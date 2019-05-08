@@ -1,0 +1,64 @@
+﻿@model EditUser
+
+<div class="alert-success">
+    @TempData["success"]
+</div>
+
+<div class="w3-main w3-container">
+
+    <h3>Details</h3>
+
+    <hr />
+    <div class="active w3-container clearfix">
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Name:</label>
+            <label class="col-form-label col-6">@Model.Name</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">User Name:</label>
+            <label class="col-form-label col-6">@Model.UserName</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Email:</label>
+            <label class="col-form-label col-6">@Model.Email</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Gender:</label>
+            <label class="col-form-label col-6">@Model.Gender</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Phone:</label>
+            <label class="col-form-label col-6">@Model.Phone</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Faculty:</label>
+            <label class="col-form-label col-6">@Model.Faculty</label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-form-label col-3">Department:</label>
+            <label class="col-form-label col-6">@Model.Department</label>
+        </div>
+    </div>
+    <hr />
+
+    <div class="form-inline btn-group w3-container">
+        <a asp-action="Edit" asp-controller="Student"
+           asp-route-uname="@Model.UserName" class="btn btn-outline-success">
+            <i class="fa fa-edit"></i>
+        </a>
+        <a asp-action="ChangePassword" asp-controller="Student" class="btn btn-outline-primary">
+            Change Password
+        </a>
+    </div>
+
+    <br />
+    <br />
+
+</div>

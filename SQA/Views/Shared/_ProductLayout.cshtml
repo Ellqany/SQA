@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.unobtrusive.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery-editable-select-master/dist/jquery-editable-select.min.js"></script>
+
+    <link asp-href-include="/lib/jquery-editable-select-master/dist/jquery-editable-select.min.css" rel="stylesheet" />
+    <link rel="stylesheet" asp-href-include="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" asp-href-include="/lib/w3css/*.css" />
+    <link asp-href-include="/lib/M3Y/M3Y.css" rel="stylesheet" />
+    <link asp-href-include="/lib/jquery/jquery-ui.css" rel="stylesheet" />
+    <link asp-href-include="/lib/fontawesome/css/font-awesome.css" rel="stylesheet" />
+    <script type="text/javascript" asp-src-include="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <title>SportsStore</title>
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md card-header active" role="navigation">
+        <a class="navbar-brand"
+           asp-controller="Product" asp-action="List" asp-route-productPage="1">
+            SPORTS STORE
+        </a>
+        <div class="nav-item text-right" style="float:right;">
+            @await Component.InvokeAsync("CartSummary")
+        </div>
+    </nav>
+
+    <div class="row m-1 p-1">
+        <div id="categories" class="col-3">
+            @await Component.InvokeAsync("NavigationMenu")
+        </div>
+        <div class="col-9">
+            @RenderBody()
+        </div>
+    </div>
+</body>
+</html>

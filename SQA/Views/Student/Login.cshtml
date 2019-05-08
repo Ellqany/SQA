@@ -1,0 +1,27 @@
+﻿@model LoginModel
+
+<br />
+
+<div class="active w3-container">
+    <form asp-area="" asp-action="Login" asp-controller="Student"
+          method="post" class="clearfix">
+
+        <div class="form-group">
+            <input asp-for="UserName" placeholder="User Name" class="form-control" />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input asp-for="Password" type="password" placeholder="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Sign in" class="btn btn-outline-primary" />
+        </div>
+
+    </form>
+</div>
+
+<br />
+<br />

@@ -1,0 +1,47 @@
+﻿@inject SignInManager<User> SignInManager
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" asp-href-include="lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" asp-href-include="lib/M3Y/M3Y.css" />
+    <link rel="stylesheet" asp-href-include="lib/fontawesome/css/font-awesome.min.css" />
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery/jquery-ui.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/jquery-ajax-unobtrusive/dist/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" asp-src-include="/lib/Client Side Validation/jquery.validate.unobtrusive.min.js"></script>
+    <title>@ViewBag.Title</title>
+    <style>
+        .input-validation-error {
+            border-color: red;
+            background-color: #fee;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-toggleable-md card-header active" role="navigation">
+        <a class="navbar-brand"
+           asp-controller="Product" asp-action="List" asp-route-productPage="1">
+            SPORTS STORE
+        </a>
+        <h4 class="nav-item">@ViewBag.Title</h4>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div class="nav-item text-right" style="float:right;">
+                <a class="btn btn-sm btn-outline-primary"
+                   asp-action="Logout" asp-controller="Account">Log Out</a>
+            </div>
+        }
+    </nav>
+
+    <div class="m-1 p-1">
+        @if (TempData["message"] != null)
+        {
+            <div class="alert alert-success">@TempData["message"]</div>
+        }
+        @RenderBody()
+    </div>
+
+</body>
+</html>
